@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     repoURL: "https://github.com/satoukick/sre-practice-infra.git"
-    path: kubernetes/argo-app
+    path: apps
     targetRevision: HEAD
   destination:
     server: "https://kubernetes.default.svc"
