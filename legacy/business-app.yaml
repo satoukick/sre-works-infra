@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: sre-practice-argo-app
+  name: sre-works-argo-app
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
-    repoURL: "https://github.com/satoukick/sre-practice.git"
+    repoURL: "https://github.com/satoukick/sre-works.git"
     path: kubernetes/app
     targetRevision: main
   destination:

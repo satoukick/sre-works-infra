@@ -1,4 +1,4 @@
-# sre-practice-infra
+# sre-works-infra
 
 ## ArgoCD 部署故障排查
 
@@ -12,7 +12,7 @@
 ### 2. 检查资源所有权和 Finalizers
 ```bash
 # 检查子 Application 是否有 finalizer
-kubectl get application sre-practice-argo-app -n argocd -o yaml | grep finalizers
+kubectl get application sre-works-argo-app -n argocd -o yaml | grep finalizers
 ```
 ### 3. 级联删除时的常见问题
 - Application 必须有 `finalizers: [resources-finalizer.argocd.argoproj.io]`

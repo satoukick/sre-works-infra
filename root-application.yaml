@@ -8,7 +8,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: "https://github.com/satoukick/sre-practice-infra.git"
+    repoURL: "https://github.com/satoukick/sre-works-infra.git"
     path: infra-apps
     targetRevision: HEAD
   destination:
