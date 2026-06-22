@@ -1,6 +1,6 @@
-# sre-practice
+# sre-works-infra
 
-Personal practice project
+Personal SRE Lab project for infrastructure
 
 # TODO
 App of app pattern

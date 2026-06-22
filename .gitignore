@@ -3,3 +3,4 @@
 .terraform
 
 .claude/settings.local.json
+.tmp
