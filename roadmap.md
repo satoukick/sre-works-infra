@@ -14,6 +14,11 @@
 
 ## Phase 1：用 Terraform Bootstrap Argo CD
 
+> **状态：代码与文档完成，待集群验证**
+> - Terraform bootstrap 代码位于 `terraform/eks/`（含 `helm`/`kubernetes`/`kubectl` provider、Argo CD helm_release、root Application 的 kubectl_manifest）。
+> - Bootstrap runbook 见 `docs/bootstrap.md`。
+> - `terraform fmt -check` 通过；`terraform init`/`apply` 因沙箱网络（github.com / registry SSL 重置）未跑通，待在联网环境验证一次真实建集群。
+
 - 在 EKS 创建完成后，为 Terraform 增加需要的 provider：`helm`、`kubernetes`，以及可选的 `argocd`。
 - 使用 Terraform 将 Argo CD 安装到 `argocd` namespace。
 - 在 Argo CD 就绪后，由 Terraform apply 或管理 `root-application.yaml`。
