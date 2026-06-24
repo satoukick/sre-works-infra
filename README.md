@@ -9,3 +9,8 @@ App of app pattern
 reference: https://github.com/SMACAcademy/ArgoCD-Complete-Master-Course/blob/main/2-Managing_Applications/App_of_Apps_Pattern.md
 
 子App部署prometheus, opentelemetry等基础组件的Helm Chart。
+
+## 文档
+
+- [Bootstrap Runbook (Phase 1)](docs/bootstrap.md) — 从零拉起 EKS + Argo CD + root Application
+- [路线图](roadmap.md)
