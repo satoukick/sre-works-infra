@@ -2,5 +2,9 @@
 .vscode
 .terraform
 
+# Terraform state files (use remote backend like S3+DynamoDB for real environments)
+*.tfstate
+*.tfstate.*
+
 .claude/settings.local.json
 .tmp
