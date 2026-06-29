@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: otel-collector
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  annotations:
+    # 依赖 OpenTelemetry Operator 提供的 OpenTelemetryCollector CRD（wave 1）。
+    # traces -> jaeger (wave 2)，metrics -> kube-prometheus-stack (wave 2)，
+    # 两个 backend 在 wave 2 就绪后，collector 在 wave 3 同步。
+    argocd.argoproj.io/sync-wave: "3"
+spec:
+  project: default
+  source:
+    repoURL: "https://github.com/satoukick/sre-works.git"
+    path: kubernetes/components/otel-collector
+    targetRevision: main
+  destination:
+    namespace: default
+    server: "https://kubernetes.default.svc"
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - PrunePropagationPolicy=foreground
+      - CreateNamespace=true

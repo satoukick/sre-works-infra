@@ -55,6 +55,12 @@
 
 ## Phase 3：补齐缺失的平台组件
 
+> **状态：代码完成，待集群验证**
+> - `infra-apps/otel-collector.yaml`（wave 3）指向 `sre-works/kubernetes/components/otel-collector/`，部署 OpenTelemetryCollector CR `simple` + ConfigMap。
+> - `infra-apps/kube-prometheus-stack.yaml`（wave 2，Helm-based）部署 kube-prometheus-stack chart 87.3.0，内联 `web.enable-otlp-receiver` override 启用 OTLP receiver。
+> - service 名一致性已核对：`jaeger-inmemory-instance-collector`、`simple-collector`、`kube-prometheus-stack-prometheus` 均与 collector endpoint 匹配。
+> - cert-manager / opentelemetry 的静态 vendor YAML 暂不转 Helm（用户决策：Phase 3 只做加法）。
+
 - 为 `sre-practice/kubernetes/otel-instance.yaml` 增加一个 child Application，用来部署 OpenTelemetry Collector。
 - 为 `sre-practice/kubernetes/otel-configmap.yaml` 增加 child Application，或者将它纳入 collector 所在路径。
 - 明确 Prometheus 的安装方式：

@@ -1,0 +1,40 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kube-prometheus-stack
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  annotations:
+    # 独立的监控 backend，无 cert-manager / otel 依赖。与 jaeger 同处 wave 2，
+    # 这样 wave 3 的 otel-collector 同步时 jaeger 和 prometheus 都已就绪。
+    # release name (= metadata.name) 决定 Prometheus service 名：
+    # kube-prometheus-stack -> kube-prometheus-stack-prometheus，
+    # 必须与 otel-instance.yaml 中 metrics exporter endpoint 一致。
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  project: default
+  source:
+    chart: kube-prometheus-stack
+    repoURL: https://prometheus-community.github.io/helm-charts
+    targetRevision: "87.3.0"
+    helm:
+      # Argo CD 对 Helm-repo-sourced chart 不支持 valueFiles 跨仓库引用，
+      # 因此只内联必要的 override，其余用 chart 默认值。
+      values: |
+        prometheus:
+          prometheusSpec:
+            # 启用 OTLP receiver，暴露 /api/v1/otlp endpoint，
+            # 供 otel-collector 的 metrics pipeline 推送（需 Prometheus 2.47+）。
+            additionalArgs:
+              - name: web.enable-otlp-receiver
+  destination:
+    namespace: monitoring
+    server: "https://kubernetes.default.svc"
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - PrunePropagationPolicy=foreground
+      - CreateNamespace=true
