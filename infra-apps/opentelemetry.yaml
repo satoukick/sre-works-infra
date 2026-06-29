@@ -6,7 +6,9 @@ metadata:
   finalizers:
     - resources-finalizer.argocd.argoproj.io
   annotations:
-    argocd.argoproj.io/sync-wave: "-1"
+    # 必须晚于 cert-manager：opentelemetry-operator.yaml 中包含 cert-manager 的
+    # Certificate / Issuer 资源，cert-manager CRD 需要先就绪。
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   project: default
   source:
@@ -20,3 +22,6 @@ spec:
     automated:
       prune: true
       selfHeal: true
+    syncOptions:
+      - PrunePropagationPolicy=foreground
+      - CreateNamespace=true

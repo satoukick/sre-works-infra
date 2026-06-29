@@ -6,7 +6,8 @@ metadata:
   finalizers:
     - resources-finalizer.argocd.argoproj.io
   annotations:
-    argocd.argoproj.io/sync-wave: "0"
+    # Jaeger 的 OpenTelemetryCollector CR 依赖 OpenTelemetry Operator 提供的 CRD。
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   project: default
   source:
@@ -20,3 +21,6 @@ spec:
     automated:
       prune: true
       selfHeal: true
+    syncOptions:
+      - PrunePropagationPolicy=foreground
+      - CreateNamespace=true

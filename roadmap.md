@@ -32,6 +32,12 @@
 
 ## Phase 2：完善 App-Of-Apps 结构
 
+> **状态：代码完成，待集群验证**
+> - `infra-apps/` 下 `cert-manager`、`opentelemetry`、`jaeger` 三个 child Application 已补齐一致的 finalizer、syncOptions 和 sync-wave。
+> - opentelemetry 的 sync-wave 从 `-1` 修正为 `1`，确保它晚于 cert-manager 同步。
+> - `legacy/business-app.yaml` 仍保留在 `legacy/`，等待后续决定是否纳入 app-of-apps tree。
+> - wave 3 的 otel-collector 属于 Phase 3 范围，尚未创建。
+
 - 保持 `root-application.yaml` 作为 root app，继续指向 `infra-apps`。
 - 确保 `infra-apps` 下每个 YAML 都是一个 Argo CD child Application。
 - 等基础组件稳定后，再考虑把 `legacy/business-app.yaml` 移入 `infra-apps`；如果目标仍然是手动部署业务 app，也可以继续保留在 `legacy`。
